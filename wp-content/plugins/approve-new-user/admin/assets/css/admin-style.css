@@ -1,0 +1,186 @@
+
+
+
+/** Admin settings design */
+
+h1.anuiwp-h1 {
+    margin: 30px 0;
+}
+
+.anuiwp-tabbing-box {
+    margin-bottom: 13px;
+}
+
+.anuiwp-option-section .nav-tab {
+    margin-left: 0;
+    margin-right: 8px;
+    background: #fff;
+    padding: 10px 30px;
+    font-size: 16px;
+    color: #000;
+}
+
+.anuiwp-option-section a.nav-tab.nav-tab-active {
+    background: #6659bf;
+    color: #fff;
+}
+
+.anuiwp-option-section .nav-tab:focus {
+    box-shadow: none;
+    outline: none;
+}
+
+.anuiwp-tabing-option {
+    display: inline-block;
+    width: 100%;
+}
+
+.anuiwp-tabing-option form {
+    /* padding-left: 10px; */
+    background-color: #dcdcde;
+    padding: 40px;
+    margin-right: 20px;
+}
+
+.anuiwp-section {
+    background-color: #fff;
+    padding: 20px 0 20px 25px;
+    margin: 10px 0;
+}
+
+.anuiwp-section h2 {
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.anuiwp-section .form-table th {
+    width: 210px;
+}
+
+/** CHeckbox Desgin */
+
+.anuiwp-main-box .anuiwp-switch {
+    position: relative;
+    display: inline-block;
+    width: 54px;
+    height: 22px;
+}
+
+.anuiwp-main-box label.anuiwp-switch {
+    cursor: pointer;
+}
+
+.anuiwp-main-box input.anuiwp-checkbox:checked+.anuiwp-slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(36px);
+}
+
+.anuiwp-main-box input:checked+.anuiwp-slider {
+    background-color: #6659bf;
+}
+
+.anuiwp-slider.anuiwp-round {
+    border-radius: 20px;
+    box-shadow: 2px 2px 30px rgb(0 0 0 / 20%);
+}
+
+.anuiwp-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.anuiwp-slider:before {
+    position: absolute;
+    content: "";
+    height: 22px;
+    width: 22px;
+    left: 0;
+    bottom: 0px;
+    background-color: #ffffff;
+    border-radius: 50%;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.anuiwp-main-box input[type="checkbox"] {
+    display: none;
+}
+
+/** Input */
+
+.anuiwp-section input:not(.anuiwp-section .wp-editor-container input),
+.anuiwp-section select:not(.anuiwp-section .wp-editor-container input) {
+    width: 350px;
+    height: 40px;
+    border: 1px solid #707070;
+    padding-left: 12px;
+}
+
+.anuiwp_content {
+    display: block;
+    width: 100%;
+}
+
+.anuiwp-section .wp-color-result {
+    border: 1px solid #707070;
+    width: 130px;
+}
+
+.anuiwp-container .anuiwp-h1 {
+    padding: 20px 0;
+}
+
+input.wp-color-picker,
+input.button.button-small.wp-picker-clear {
+    width: auto;
+    height: auto;
+}
+
+.wp-core-ui .anuiwp-tabing-option .button-primary {
+    background: #6659bf;
+    color: #ffffff;
+    padding: 3px 16px;
+    font-size: 14px;
+    border: none;
+}
+
+.wp-core-ui .anuiwp-tabing-option .button-primary:focus {
+    box-shadow: none;
+}
+
+/** Approve New User page design */
+.wp-core-ui .anuiwp-option-section .button-primary {
+    background: #6659bf;
+    border-color: #6659bf;
+    color: #fff;
+    text-decoration: none;
+    text-shadow: none;
+}
+
+#anuiwp-users-list tbody .approve-btn,
+#anuiwp-users-list tbody .deny-btn {
+    width: 81px;
+    text-align: center;
+    align-self: center;
+    margin-left: 10px;
+}
+
+#anuiwp-users-list tbody .approve-btn {
+    background: #61bd4f;
+    border-color: #73e831;
+    color: #fff;
+}
+
+#anuiwp-users-list tbody .deny-btn {
+    background: #eb5a46;
+    border-color: #f3463a;
+    color: #fff;
+}
