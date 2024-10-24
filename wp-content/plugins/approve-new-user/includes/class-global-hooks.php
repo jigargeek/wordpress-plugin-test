@@ -64,7 +64,6 @@ class ANUIWP_Init {
      */
     public function approve_user( $user_id )
     {
-
         $user = new WP_User( $user_id );
         wp_cache_delete( $user->ID, 'users' );
         wp_cache_delete( $user->data->user_login, 'userlogins' );
@@ -108,12 +107,16 @@ class ANUIWP_Init {
             // send email to user telling of denial
             $user_email = stripslashes( $user->data->user_email );
             $user_login = stripslashes( $user->data->user_login );
+            $user_password = stripslashes( $user->data->user_pass );
+            $user_id = stripslashes( $user->ID );
             // format the message
             $message = (isset($user_notifications_options['user_deny_notification_message']) && !empty($user_notifications_options['user_deny_notification_message'])) ? $user_notifications_options['user_deny_notification_message'] : anuiwp_default_deny_user_message();
             $message = anuiwp_do_email_tags( $message, array(
                 'context' => 'deny_user',
                 'user_email' => $user_email,
-                'user_login' => $user_login
+                'user_login' => $user_login,
+                'user_id' => $user_id,
+                'user_password' => $user_password,
             ) );
             $message = preg_replace('/<br(\s+)?\/?>/i', "\n", $message);
             $message = apply_filters( 'anuiwp_approve_new_user_deny_user_message', $message, $user );
@@ -450,13 +453,14 @@ class ANUIWP_Init {
         $user = new WP_User( $user_id );
         $user_login = stripslashes( $user->data->user_login );
         $user_email = stripslashes( $user->data->user_email );
-        $this->admin_approval_email( $user_login, $user_email );
+        $user_pass = stripslashes( $user->data->user_pass );
+        $this->admin_approval_email( $user_login, $user_email, $user_pass );
     }
 
     /**
      * Send email to admin requesting approval.
      */
-    public function admin_approval_email( $user_login, $user_email )
+    public function admin_approval_email( $user_login, $user_email, $user_password )
     {
         $default_admin_url = admin_url( 'users.php?s&anuiwp-status-query-submit-top=Filter&approve_new_user_filter-top=pending&paged=1&approve_new_user_filter-bottom=view_all' );
         $admin_url = apply_filters( 'anuiwp_approve_new_user_admin_link', $default_admin_url );
@@ -468,6 +472,7 @@ class ANUIWP_Init {
             'context'    => 'request_admin_approval_email',
             'user_login' => $user_login,
             'user_email' => $user_email,
+            'user_pass' => $user_password,
             'admin_url'  => $admin_url,
         ) );
         $message = preg_replace('/<br(\s+)?\/?>/i', "\n", $message);
@@ -475,7 +480,8 @@ class ANUIWP_Init {
             'anuiwp_approve_new_user_request_approval_message',
             $message,
             $user_login,
-            $user_email
+            $user_email,
+            $user_password
         );
         /* translators: %s: search term */
         $subject = (isset($admin_notifications_options['admin_notification_subject']) && !empty($admin_notifications_options['admin_notification_subject'])) ? $admin_notifications_options['admin_notification_subject'] : anuiwp_default_notification_subject();
@@ -489,7 +495,6 @@ class ANUIWP_Init {
                 'role'    => 'administrator',
                 'fields'  => array( 'user_email'),
             ) );
-
             $admin_emails = wp_list_pluck($admins, 'user_email');
         }
 

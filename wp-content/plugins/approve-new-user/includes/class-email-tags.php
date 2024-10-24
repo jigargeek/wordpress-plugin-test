@@ -297,28 +297,54 @@ function anuiwp_email_tag_loginurl( $attributes ) {
  * Generates the password for the user to add to the email
  */
 function anuiwp_email_tag_password( $attributes ) {
-	$user = $attributes['user'];
+	$context = $attributes['context'];
+	if($context == 'approve_user'){
+		$user = $attributes['user'];
+		if ( $user->ID ) {
+			// reset password to know what to send the user
+			// $new_pass = wp_generate_password( 12, false );
+			$user_password = $user->data->user_pass;
+			// store the password
+			global $wpdb;
+			$data  = array( 'user_pass' => $user_password, 'user_activation_key' => '', );
+			$where = array( 'ID' => $user->ID, );
+			$wpdb->update( $wpdb->users, $data, $where, array( '%s', '%s' ), array( '%d' ) );
 
-	if ( anuiwp_approve_new_user()->do_password_reset( $user->ID ) ) {
-		// reset password to know what to send the user
-		$new_pass = wp_generate_password( 12, false );
+			// Set up the Password change nag.
+			update_user_option( $user->ID, 'default_password_nag', true, true );
 
-		// store the password
-		global $wpdb;
-		$data = array( 'user_pass' => md5( $new_pass ), 'user_activation_key' => '', );
-		$where = array( 'ID' => $user->ID, );
-		$wpdb->update( $wpdb->users, $data, $where, array( '%s', '%s' ), array( '%d' ) );
+			// Set this meta field to track that the password has been reset by
+			// the plugin. Don't reset it again unless doing a password reset.
+			update_user_meta( $user->ID, 'anuiwp_user_approve_password_reset', time() );
+			/* translators: %s: search term */
+			return sprintf( __( 'Password: %s', 'approve-new-user' ), $user_password );
+		} else {
+			return '';
+		}
+	}elseif($context == 'deny_user'){
 
-		// Set up the Password change nag.
-		update_user_option( $user->ID, 'default_password_nag', true, true );
+		if ( $attributes['user_id'] ) {
+			// reset password to know what to send the user
+			// $new_pass = wp_generate_password( 12, false );
+			$user_password = $attributes['user_password'];
 
-		// Set this meta field to track that the password has been reset by
-		// the plugin. Don't reset it again unless doing a password reset.
-		update_user_meta( $user->ID, 'anuiwp_user_approve_password_reset', time() );
-		/* translators: %s: search term */
-		return sprintf( __( 'Password: %s', 'approve-new-user' ), $new_pass );
-	} else {
-		return '';
+			// store the password
+			global $wpdb;
+			$data = array( 'user_pass' => $user_password, 'user_activation_key' => '', );
+			$where = array( 'ID' => $attributes['user_id'], );
+			$wpdb->update( $wpdb->users, $data, $where, array( '%s', '%s' ), array( '%d' ) );
+
+			// Set up the Password change nag.
+			update_user_option( $attributes['user_id'], 'default_password_nag', true, true );
+
+			// Set this meta field to track that the password has been reset by
+			// the plugin. Don't reset it again unless doing a password reset.
+			update_user_meta( $attributes['user_id'], 'anuiwp_user_approve_password_reset', time() );
+			/* translators: %s: search term */
+			return sprintf( __( 'Password: %s', 'approve-new-user' ), $user_password );
+		} else {
+			return '';
+		}
 	}
 }
 

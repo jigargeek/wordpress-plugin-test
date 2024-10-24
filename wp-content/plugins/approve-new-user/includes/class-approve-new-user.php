@@ -73,7 +73,7 @@ class ANUIWP_Approve_New_User_Main {
 
         $this->loader->add_action( 'load-users.php', $plugin_user_list, 'bulk_action' );
 
-		// $this->loader->add_action( 'init', $plugin_user_list, 'deniend_user' );
+		$this->loader->add_action( 'init', $plugin_user_list, 'deniend_user' );
 
 		$this->loader->add_action( 'show_user_profile', $plugin_user_list, 'profile_status_field' );
 		$this->loader->add_action( 'edit_user_profile', $plugin_user_list, 'profile_status_field' );

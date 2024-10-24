@@ -62,7 +62,6 @@ function anuiwp_approve_new_user_subject() {
  */
 function anuiwp_auto_approve_message() {
 	$message = sprintf( __( 'You have been approved to access {sitename}. You will receive an email with instructions on what you will need to do next. Thanks for your patience.
-
 	', 'approve-new-user' ) );
 	$message .= ' ';
 	$message = apply_filters( 'anuiwp_approve_new_user_auto_approve_message', $message );
@@ -141,18 +140,18 @@ function anuiwp_default_registration_message() {
 function anuiwp_default_registeration_welcome_email_subject() {
     $subject = sprintf( __( 'Your registration is pending for approval - [%s]', 'approve-new-user' ), get_option( 'blogname' ) );
     $subject = apply_filters( 'anuiwp_approve_new_user_welcome_user_subject', $subject );
-    
+
     return $subject;
 }
 
 function anuiwp_default_registeration_welcome_email() {
     $message  = __('Hello,', "approve-new-user") . "\r\n\r\n";
-    
+
     $message .= __("Thank you for registering on our site. We have successfully received your request and is currently pending for approval.", "approve-new-user") . "\r\n";
-    
+
     $message .= __("The administrator will review the information that has been submitted after which they will either approve or deny your request. You will receive an email with the instructions on what you will need to do next.", "approve-new-user") . "\r\n\r\n";
-    
+
     $message .= __("Thank You", "approve-new-user");
-    
+
     return $message;
 }

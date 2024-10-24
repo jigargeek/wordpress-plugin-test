@@ -406,12 +406,12 @@ class ANUIWP_User_List {
 		return false;
 	}
 
-	// public function deniend_user(){
-	// 	$current_user_id = get_current_user_id();
+	public function deniend_user(){
+		$current_user_id = get_current_user_id();
 
-	// 	$anuiwp_user_status = get_user_meta($current_user_id, 'anuiwp_user_status', true);
-	// 	if($anuiwp_user_status == 'denied'){
-	// 		wp_logout();
-	// 	}
-	// }
+		$anuiwp_user_status = get_user_meta($current_user_id, 'anuiwp_user_status', true);
+		if($anuiwp_user_status == 'denied'){
+			wp_logout();
+		}
+	}
 }
